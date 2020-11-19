@@ -1,1 +1,172 @@
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include <queue>
+#include <stdio.h>
+#include <time.h>
+
+using namespace std;1
+
+struct Sintomas{
+	string sintoma;
+	float tiempo;
+};
+typedef struct Sintomas sintomas;
+
+struct Paciente{
+	string nombre;
+	int edad;
+	char sexo;
+	string municipio;
+	int identificacion;
+	queue <sintomas> colasintomas;
+	bool estado;
+};
+typedef struct Paciente paciente;
+
+struct Nodo{
+	paciente persona;
+	Nodo *sig;
+};
+Nodo *Inicio;
+
+void MenuRecepcion();
+void MenuClinica();
+void agregar();
+void AgregarPaciente(paciente person);
+void eliminar();
+bool comparar(paciente a, paciente b);
+void visualizarPaciente();
+void mostrar(paciente a);
+void visualizarLista();
+void borrarListaCompleta();
+void verPrimero();
+void verUltimo();
+void Atender();
+int prueba();
+void NumeroPositivos();
+void NumeroNegativos();
+void borrarColasCompleta();
+
+queue <paciente> Positivos;
+queue <paciente> Negativos;
+
+int main(){
+	
+	Inicio=NULL;
+	
+	bool continuar=true; 
+	
+	do{
+		system("cls");
+		int opcion=0;
+		cout<<"\n\t\t.:BIENVENIDO:."<<endl;
+		
+		cout<<"\n\tOpciones:"<<endl;
+		cout<<"\n\t1. Recepcion";
+		cout<<"\n\t2. Clinica";
+		cout<<"\n\t3. Reiniciar programa";
+		cout<<"\n\t4. Terminar";
+		cout<<"\n\tNumero: "; cin>>opcion;
+		
+		switch(opcion){
+			case 1:{
+				MenuRecepcion();
+				break;
+			}
+			case 2:{
+				MenuClinica();
+				break;
+			}
+			case 3:{
+				borrarListaCompleta();
+				borrarColasCompleta();
+				cout<<"\nReiniciando..."<<endl;
+				cout<<"Completado"<<endl;
+				system("pause");
+				break;
+			}
+			case 4:{
+				continuar=false;
+				break;
+			}
+			default:{
+				cout<<"\nOpcion Inexistente";
+				cout<<"\nIntente de nuevo. ";
+				system("pause");
+				break;
+			}
+		}
+	}while(continuar);
+	
+	cout<<"\n\n   .:MUCHAS GRACIAS POR SU PREFERENCIA:."<<endl;
+	
+	return 0;
+}
+
+void MenuRecepcion(){
+	
+	bool continuar=true;
+	
+	do{
+		system("cls");
+		int opcion2=0;
+		
+		cout<<"\n\tOpciones:"<<endl;
+		cout<<"\n\t1. Ingresar paciente";
+		cout<<"\n\t2. Retirar paciente";
+		cout<<"\n\t3. Expediente de un paciente";
+		cout<<"\n\t4. Visualizar lista de espera";
+		cout<<"\n\t5. Borrar lista de espera completa";
+		cout<<"\n\t6. Ver primero en la lista";
+		cout<<"\n\t7. Ver ultimo en la lista";
+		cout<<"\n\t8.Salir";
+		cout<<"\n\tR/ ";
+		cin>>opcion2;
+		
+		switch(opcion2){
+			case 1:{
+				agregar();
+				break;
+			}
+			case 2:{
+				eliminar();
+				break;
+			}
+			case 3:{
+				visualizarPaciente();
+				break;
+			}
+			case 4:{
+				visualizarLista();
+				break;
+			}
+			case 5:{
+				borrarListaCompleta();
+				cout<<"\nLista Borrada"<<endl;
+				system("pause");
+				break;
+			}
+			case 6:{
+				verPrimero();
+				break;
+			}
+			case 7:{
+				verUltimo();
+				break;
+			}
+			case 8:{
+				continuar=false;
+				break;
+			}
+			default:{
+				cout<<"Opcion Invalida";
+				cout<<"Intentelo de nuevo. ";
+				system("pause");
+				break;
+			}
+		}
+	}while(continuar);
+	
+}
 
