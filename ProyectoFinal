@@ -467,3 +467,160 @@ int prueba(){
 
 	return dato;
 }
+
+void NumeroPositivos(){
+	
+	bool continuar=true;
+	
+	do{
+		system("cls");
+		int opcion=0;
+		
+		cout<<"\n\tOpciones:"<<endl;
+		cout<<"\n\t1. Ver Total de Positivos";
+		cout<<"\n\t2. Ver primer Caso";
+		cout<<"\n\t3. Ver ultimo Caso";
+		cout<<"\n\t4. Salir";
+		cout<<"\n\tR/ ";
+		cin>>opcion;
+		
+		switch(opcion){
+			case 1:{
+				if(Positivos.empty()){
+					cout<<"\nNo hay casos Positivos"<<endl;
+				}else{
+					queue <paciente> Aux;
+					int total=Positivos.size();
+					for(int i=0;i<total;i++){
+						paciente a=Positivos.front();
+						cout<<i+1<<"- "<<a.nombre<<endl;
+						Aux.push(a);
+						Positivos.pop();
+					}
+					for(int i=0;i<total;i++){
+						paciente a=Aux.front();
+						Positivos.push(a);
+						Aux.pop();
+					}
+				}
+				system("pause");
+				break;
+			}
+			case 2:{
+				if(Positivos.empty()){
+					cout<<"\nNo hay casos Positivos"<<endl;
+				}else{
+					paciente a=Positivos.front();
+					cout<<"\n\tEl primer Positivo es: "<<a.nombre<<endl;
+				}
+				system("pause");
+				break;
+			}
+			case 3:{
+				if(Positivos.empty()){
+					cout<<"\nNo hay casos Positivos"<<endl;
+				}else{
+					paciente a=Positivos.back();
+					cout<<"\n\tEl ultimo Positivo es: "<<a.nombre<<endl;
+				}
+				system("pause");
+				break;
+			}
+			case 4:{
+				continuar=false;
+				break;
+			}
+			default:{
+				cout<<"Opcion Invalida";
+				cout<<"Intentelo de nuevo. ";
+				system("pause");
+				break;
+			}
+		}
+	}while(continuar);
+	
+}
+
+void NumeroNegativos(){
+	
+	bool continuar=true;
+	
+	do{
+		system("cls");
+		int opcion=0;
+		
+		cout<<"\n\tOpciones:"<<endl;
+		cout<<"\n\t1. Ver Total de Negativos";
+		cout<<"\n\t2. Ver primer Caso";
+		cout<<"\n\t3. Ver ultimo Caso";
+		cout<<"\n\t4. Salir";
+		cout<<"\n\tR/ ";
+		cin>>opcion;
+		
+		switch(opcion){
+			case 1:{
+				if(Negativos.empty()){
+					cout<<"\nNo hay casos Negativos"<<endl;
+				}else{
+					queue <paciente> Aux;
+					int total=Negativos.size();
+					for(int i=0;i<total;i++){
+						paciente a=Negativos.front();
+						cout<<i+1<<"- "<<a.nombre<<endl;
+						Aux.push(a);
+						Negativos.pop();
+					}
+					for(int i=0;i<total;i++){
+						paciente a=Aux.front();
+						Negativos.push(a);
+						Aux.pop();
+					}
+				}
+				system("pause");
+				break;
+			}
+			case 2:{
+				if(Negativos.empty()){
+					cout<<"\nNo hay casos Negativos"<<endl;
+				}else{
+					paciente a=Negativos.front();
+					cout<<"\n\tEl primer Negativo es: "<<a.nombre<<endl;
+				}
+				system("pause");
+				break;
+			}
+			case 3:{
+				if(Negativos.empty()){
+					cout<<"\nNo hay casos Negativos"<<endl;
+				}else{
+					paciente a=Negativos.back();
+					cout<<"\n\tEl ultimo Negativo es: "<<a.nombre<<endl;
+				}
+				system("pause");
+				break;
+			}
+			case 4:{
+				continuar=false;
+				break;
+			}
+			default:{
+				cout<<"Opcion Invalida";
+				cout<<"Intentelo de nuevo. ";
+				system("pause");
+				break;
+			}
+		}
+	}while(continuar);
+	
+}
+
+void borrarColasCompleta(){
+	
+	while(!Positivos.empty()){
+		Positivos.pop();
+	}
+	while(!Negativos.empty()){
+		Negativos.pop();
+	}
+	
+}
