@@ -170,3 +170,143 @@ void MenuRecepcion(){
 	
 }
 
+void MenuClinica(){
+	
+	bool continuar=true;
+	
+	do{
+		system("cls");
+		int opcion2=0;
+		Nodo *x=Inicio;
+		cout<<"\n\tOpciones:"<<endl;
+		
+		cout<<"\n\t1. Atender Paciente ";
+		if(x==NULL){
+			cout<<"(Sin pacientes)";
+		}else{
+			cout<<x->persona.nombre;
+		}
+		cout<<"\n\t2. Ver casos positivos";
+		cout<<"\n\t3. Ver casos negativos";
+		cout<<"\n\t4. Salir";
+		cout<<"\n\tR/ ";
+		cin>>opcion2;
+		
+		switch(opcion2){
+			case 1:{
+				Atender();
+				break;
+			}
+			case 2:{
+				NumeroPositivos();
+				break;
+			}
+			case 3:{
+				NumeroNegativos();
+				break;
+			}
+			case 4:{
+				continuar=false;
+				break;
+			}
+			default:{
+				cout<<"Opcion Invalida";
+				cout<<"Intentelo de nuevo. ";
+				system("pause");
+				break;
+			}
+		}
+	}while(continuar);
+	
+}
+
+void agregar(){
+	bool comprobar=true;
+	paciente x;
+	fflush(stdin);
+	cout<<"\tNombre: ";getline(cin,x.nombre);
+	Nodo *p = Inicio, *q = NULL;
+	do{
+		cout<<"\tIdentificacion: ";cin>>x.identificacion;cin.ignore();
+		while(p != NULL && !comparar(p->persona, x)){
+        q = p;
+        p = p->sig;
+    	}
+    	if(p==NULL){
+    		comprobar=false;
+		}
+	}while(comprobar);
+	cout<<"\tEdad: ";cin>>x.edad;cin.ignore();
+	do{
+		cout<<"\tSexo M/F: ";cin>>x.sexo;cin.ignore();
+	}while((x.sexo!='M')&&(x.sexo!='F')&&(x.sexo!='m')&&(x.sexo!='f'));
+	cout<<"\tMunicipio: ";getline(cin,x.municipio);
+	
+	bool continuar=true;
+	do{
+		sintomas muestra;
+		char resp;
+		fflush(stdin);
+		cout<<"Sintoma: ";getline(cin,muestra.sintoma);
+		cout<<"Duracion en dias del sintoma: ";cin>>muestra.tiempo;cin.ignore();
+		
+		x.colasintomas.push(muestra);
+		
+		do{
+			cout<<"Desea continuar? s/n  : ";cin>>resp;
+			if((resp=='n')||(resp=='N')){
+				continuar=false;
+			}
+		}while((resp!='n')&&(resp!='N')&&(resp!='s')&&(resp!='S'));
+	}while(continuar);
+	
+	AgregarPaciente(x);
+	
+}
+
+void AgregarPaciente(paciente person){
+	Nodo *nuevo=new Nodo;
+	nuevo->persona=person;
+	nuevo->sig=NULL;
+	
+	if(Inicio==NULL) {
+        Inicio = nuevo;
+    }else{
+        Nodo *p=Inicio;
+        Nodo *q=NULL;
+        while(p!=NULL) {
+            q = p;
+            p = p->sig;
+        }
+        q->sig = nuevo;
+    }
+	
+}
+
+void eliminar(){
+    cout << "Dato a eliminar: ";
+    paciente ref;
+    
+	fflush(stdin);
+    cout<<"Identificacion: ";cin>>ref.identificacion;//Agregar el ciclo para que no se repita
+    
+    Nodo *p = Inicio, *q = NULL;
+    
+    while(p != NULL && !comparar(p->persona, ref)){
+        q = p;
+        p = p->sig;
+    }
+    if(p == NULL){
+        cout << "Dato a borrar NO existe" << endl;
+    }
+	
+    if(q == NULL){
+    	Inicio = p->sig;
+	}else{
+		q->sig = p->sig;
+	}
+	
+    delete(p);
+    
+    cout << "Dato borrado!" << endl;
+}
