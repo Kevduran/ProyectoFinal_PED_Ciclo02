@@ -310,3 +310,160 @@ void eliminar(){
     
     cout << "Dato borrado!" << endl;
 }
+
+bool comparar(paciente a, paciente b){
+    return (a.identificacion == b.identificacion);
+}
+
+void visualizarPaciente(){
+    paciente ref;
+    
+	fflush(stdin);
+    cout<<"Identificacion: ";cin>>ref.identificacion;
+    
+    Nodo *p = Inicio, *q = NULL;
+    
+    while((p!=NULL)&&(!comparar(p->persona, ref))){
+        q = p;
+        p = p->sig;   
+    }
+    
+    if(p==NULL){
+        cout<<"Dato NO existe"<<endl;
+        system("pause");
+    }else{
+    	ref=p->persona;
+    	mostrar(ref);
+	}
+	
+}
+
+void mostrar(paciente a){
+	
+	queue <Sintomas> auxiliar;
+	
+	cout<<"\n\tNombre: "<<a.nombre;
+	cout<<"\n\tIdentificacion: "<<a.identificacion;
+	cout<<"\n\tEdad: "<<a.edad;
+	cout<<"\n\tSexo: "<<a.sexo;
+	cout<<"\n\tMunicipio: "<<a.municipio;
+	cout<<"\n\tSintomas: "<<endl;
+	
+	while(!a.colasintomas.empty()){
+		sintomas aux=a.colasintomas.front();
+		cout<<"\t-"<<aux.sintoma<<" por "<<aux.tiempo<<" dias"<<endl;
+		auxiliar.push(aux);
+		a.colasintomas.pop();
+	}
+	
+	while(!auxiliar.empty()){
+		sintomas aux=auxiliar.front();
+		a.colasintomas.push(aux);
+		auxiliar.pop();
+	}
+	
+	system("pause");
+}
+
+void visualizarLista(){
+	
+	Nodo *p = Inicio;
+	
+	if(p==NULL){
+		cout<<"Lista Vacia"<<endl;
+	}else{
+		cout<<"Esperan:"<<endl;
+		int i=1;
+        Nodo *q = NULL;
+        while(p!=NULL){
+            q = p;
+            cout<<i<<"- "<<q->persona.nombre<<endl;
+            p = p->sig;
+            i++;
+        }
+	}
+	system("pause");
+}
+
+void borrarListaCompleta(){
+	
+	Nodo *p = Inicio, *q = NULL;
+
+	while(p!=NULL){
+	    q = p->sig;
+		delete(p);
+	    p = q;  
+    }
+	Inicio=NULL;
+
+}
+
+void verPrimero(){
+	
+	Nodo *p = Inicio;
+	if(p==NULL){
+		cout<<"\n\tNo hay nadie en la lista"<<endl;
+	}else{
+		cout<<"\n\tEl primero es: "<<p->persona.nombre<<endl;
+	}
+	
+	system("pause");
+	
+}
+
+void verUltimo(){
+	
+	Nodo *p = Inicio, *q=NULL;
+	
+	while(p!=NULL){
+		q=p;
+		p=p->sig;
+	}
+	
+	if(q==NULL){
+		cout<<"\n\tNo hay nadie en la lista"<<endl;
+	}else{
+		cout<<"\n\tEl ultimo es: "<<q->persona.nombre<<endl;
+	}
+	
+	system("pause");
+	
+}
+
+void Atender(){
+	
+	Nodo *x=Inicio;
+	
+	if(x==NULL){
+		cout<<"\nNo hay pacientes"<<endl;
+	}else{
+		cout<<"\nRealizando prueba COVID-19...";
+		
+		int num=prueba();
+		cout<<"\nPrueba: ";
+		if(num==2){
+			x->persona.estado=true;
+			cout<<"Positivo"<<endl;
+			Positivos.push(x->persona);
+		}else{
+			x->persona.estado=false;
+			cout<<"Negativo"<<endl;
+			Negativos.push(x->persona);
+		}
+		
+		Inicio=x->sig;//Se supone que ya
+		
+		delete(x);
+	}
+	
+	system("pause");
+}
+
+int prueba(){
+	int dato;
+	
+	srand (time (NULL));
+	dato=2+rand () % (3+1-2);
+
+	return dato;
+}
